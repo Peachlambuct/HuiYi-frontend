@@ -28,7 +28,6 @@ import { useEffect, useState } from "react";
 import { post } from "@/net";
 import { useRouter } from "next/navigation";
 
-
 interface DoctorInfo {
   id: string;
   name: string;
@@ -55,45 +54,57 @@ export function AppointSheet({ id, name }: DoctorInfo) {
   const [appointmentTime, setAppointmentTime] = useState<AppointmentTime[]>([]);
   const [selectedDate, setSelectedDate] = useState("");
   const doctor_id = id.toString();
-  const chooseProp = {
-    doctor_id: doctor_id,
-    date: selectedDate,
-  };
   const Router = useRouter();
 
-  const getAppointment = async () => {
+  const getAppointment = async (date: string) => {
     try {
-      const data = await post("/api/appointment/choose", chooseProp);
+      const data = await post("/api/appointment/choose", {
+        doctor_id: doctor_id,
+        date: date,
+      });
       setAppointmentTime(data);
-      console.log(data);
+      setSelectedVal(null);
+      setSelectedInfo((prev) => ({ ...prev, time_id: null }));
     } catch (error) {
       console.error("Error fetching appointment:", error);
     }
   };
 
-  const handleDateChange = (date: string) => {
+  const handleDateChange = async (date: string) => {
     setSelectedDate(date);
     setSelectedInfo((prev) => ({ ...prev, time: date }));
-    chooseProp.date = date;
-    getAppointment();
+    await getAppointment(date);
   };
 
   const submit = async () => {
+    if (!selectedInfo.time_id || !selectedInfo.time) {
+      alert("请选择预约时间");
+      return;
+    }
+
     try {
       const data = await post("/api/appointment/increase", selectedInfo);
       console.log(data);
       setSelectedVal(null);
+      setSelectedInfo({
+        time_id: null,
+        doctor_id: id,
+        time: null,
+      });
       setAppointmentTime([]);
+      setSelectedDate("");
       Router.push("/patient/1/new-appointment/success");
     } catch (error) {
       console.error("Error submitting appointment:", error);
     }
-
   };
 
   const handleSelect = (val: number | null) => {
     setSelectedVal(val);
-    setSelectedInfo((prev) => ({ ...prev, time_id: val }));
+    setSelectedInfo((prev) => ({
+      ...prev,
+      time_id: val,
+    }));
   };
 
   const dates = Array.from({ length: 3 }, (_, i) => addDays(new Date(), i));
@@ -153,7 +164,6 @@ export function AppointSheet({ id, name }: DoctorInfo) {
                 isSelected={selectedVal === time.val}
               />
             ))}
-
           </div>
         </div>
         <SheetFooter>

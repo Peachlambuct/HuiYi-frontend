@@ -19,12 +19,14 @@ export const Avatar: React.FC = () => {
     <div className="flex gap-3 justify-end items-center">
       <div className="text-right space-y-0.5">
         <div className="flex justify-center items-center gap-2">
-          <div className="text-zinc-700 font-mono font-semibold">
+          <div className="text-zinc-700 font-mono font-semibold dark:text-zinc-300">
             {data.name}
           </div>
           <div
             className={`"text-sm ${
-              data.role === "admin" ? "bg-zinc-800" : "bg-teal-500"
+              data.role === "admin"
+                ? "bg-zinc-800 dark:bg-zinc-700"
+                : "bg-teal-500 dark:bg-teal-600"
             } text-white px-1.5 rounded-full font-mono"`}
           >
             {data.role ? data.role : "user"}

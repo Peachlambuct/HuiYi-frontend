@@ -48,10 +48,13 @@ const CaseInfo = () => {
     getInfo();
   }, []);
   return (
-    <div className="h-screen w-screen bg-zinc-200 flex flex-col">
+    <div className="h-screen w-screen bg-zinc-200 dark:bg-zinc-900 flex flex-col">
       <div className="flex justify-between items-center p-3">
         <div>
-          <Link className="text-teal-400 text-lg" href="/cases/list">
+          <Link
+            className="text-teal-400 hover:text-teal-500 dark:text-teal-500 dark:hover:text-teal-400 text-lg"
+            href="/cases/list"
+          >
             ◀ 返回病例列表
           </Link>
         </div>
@@ -60,16 +63,23 @@ const CaseInfo = () => {
         </div>
       </div>
       <div className="flex flex-grow justify-center mt-4 overflow-y-auto custom-scrollbar">
-        <div className="w-[76%] bg-zinc-100/80 shadow-md p-4 rounded-2xl flex flex-col overflow-y-auto custom-scrollbar">
+        <div className="w-[76%] bg-zinc-100/80 dark:bg-zinc-800/50 shadow-md p-4 rounded-2xl flex flex-col overflow-y-auto custom-scrollbar">
           <div className="flex justify-between items-end mb-10">
-            <div className="text-6xl font-semibold">{caseInfo?.title}</div>
-            <div className="text-zinc-600 text-2xl font-mono">2024-04-11</div>
+            <div className="text-6xl font-semibold text-zinc-800 dark:text-zinc-100">
+              {caseInfo?.title}
+            </div>
+            <div className="text-zinc-600 dark:text-zinc-400 text-2xl font-mono">
+              2024-04-11
+            </div>
           </div>
 
           <section className="px-12">
-            <div className="text-4xl font-semibold">开具检查项</div>
+            <div className="text-4xl font-semibold text-zinc-800 dark:text-zinc-100">
+              开具检查项
+            </div>
             {caseInfo?.check_project.map((item) => (
               <CheckInfoCard
+                key={item.name}
                 name={item.name}
                 date={item.time}
                 room={item.room}
@@ -80,13 +90,19 @@ const CaseInfo = () => {
           </section>
 
           <section className="px-12 pt-7">
-            <div className="text-4xl font-semibold mt-3">医嘱</div>
-            <div className="mt-4">{caseInfo?.content}</div>
+            <div className="text-4xl font-semibold text-zinc-800 dark:text-zinc-100 mt-3">
+              医嘱
+            </div>
+            <div className="mt-4 text-zinc-700 dark:text-zinc-300">
+              {caseInfo?.content}
+            </div>
           </section>
 
           <section className="flex justify-end mt-6 text-xl">
-            <span>主治医师：</span>
-            <span>{caseInfo?.doctor_name}</span>
+            <span className="text-zinc-700 dark:text-zinc-300">主治医师：</span>
+            <span className="text-zinc-800 dark:text-zinc-200">
+              {caseInfo?.doctor_name}
+            </span>
           </section>
         </div>
       </div>

@@ -22,7 +22,7 @@ const Success = () => {
       </div>
       <div className="flex justify-center flex-col items-center">
         <Link
-          className="flex items-center text-3xl text-zinc-700 font-semibold gap-4 mr-10"
+          className="flex items-center text-3xl text-zinc-700 font-semibold gap-4 mr-10 dark:text-zinc-300"
           href="/"
         >
           <Image
@@ -43,10 +43,12 @@ const Success = () => {
             alt="success"
             className="mb-6"
           />
-          <h2 className="text-3xl text-center max-w-[600px] font-semibold text-zinc-600">
-            你的<span className="text-teal-500">预约请求</span>成功提交！✅
+          <h2 className="text-3xl text-center max-w-[600px] font-semibold text-zinc-600 dark:text-zinc-300">
+            你的
+            <span className="text-teal-500 dark:text-teal-600">预约请求</span>
+            成功提交！✅
           </h2>
-          <p className="text-zinc-500 mt-4">
+          <p className="text-zinc-500 mt-4 dark:text-zinc-400">
             我们将会尽快给您发送预约确认信息。
           </p>
         </section>

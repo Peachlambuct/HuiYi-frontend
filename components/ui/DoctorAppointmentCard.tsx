@@ -15,7 +15,7 @@ const DoctorAppointmentCard = ({
   title,
 }: DoctorAppointmentCardProps) => {
   return (
-    <div className="w-[90%] bg-zinc-100 rounded-xl shadow p-2 h-[70px]">
+    <div className="w-[90%] bg-zinc-100 dark:bg-zinc-800/80 rounded-xl shadow p-2 h-[70px] hover:bg-zinc-200/80 dark:hover:bg-zinc-700/80 transition-colors">
       <div className="flex justify-between">
         <div className="flex gap-2 items-center">
           <div>
@@ -27,10 +27,10 @@ const DoctorAppointmentCard = ({
               className="w-9 h-9 rounded-2xl"
             />
           </div>
-          <div>{name}</div>
+          <div className="text-zinc-800 dark:text-zinc-100">{name}</div>
         </div>
         <div className="relative">
-          <div className="text-right text-zinc-600 flex gap-2 items-end">
+          <div className="text-right text-zinc-600 dark:text-zinc-400 flex gap-2 items-end">
             <div className="">{type}</div>
             <div className="text-sm">{title}</div>
           </div>

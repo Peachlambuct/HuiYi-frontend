@@ -24,7 +24,7 @@ const AppointmentCard = ({
   deleteAppointment,
 }: AppointmentCardProps) => {
   return (
-    <div className=" bg-zinc-50 p-2 rounded-xl shadow">
+    <div className=" bg-zinc-50 dark:bg-zinc-800/80 p-2 rounded-xl shadow">
       <div className="flex justify-between items-center">
         <div className="flex gap-2 items-center">
           <div>
@@ -40,10 +40,12 @@ const AppointmentCard = ({
               className="w-9 h-9 rounded-2xl"
             />
           </div>
-          <div className="text-lg">{doctorName}</div>
+          <div className="text-lg text-zinc-800 dark:text-zinc-100">
+            {doctorName}
+          </div>
         </div>
-        <div className="flex gap-2 items-center text-sm text-zinc-600 justify-end">
-          <div className="flex gap-1 items-center text-zinc-600">
+        <div className="flex gap-2 items-center text-sm text-zinc-600 dark:text-zinc-400 justify-end">
+          <div className="flex gap-1 items-center text-zinc-600 dark:text-zinc-400">
             <div
               className={`${
                 status ? "bg-green-400" : "bg-red-500"
@@ -64,7 +66,7 @@ const AppointmentCard = ({
         </div>
       </div>
       <div className="flex justify-between items-end">
-        <div className="text-left mt-2 ml-1 text-zinc-600 space-x-2">
+        <div className="text-left mt-2 ml-1 text-zinc-600 dark:text-zinc-400 space-x-2">
           <span className="font-semibold">{type}</span>
           <span className="text-sm">{title}</span>
         </div>
@@ -72,7 +74,7 @@ const AppointmentCard = ({
           onClick={() => {
             deleteAppointment(id);
           }}
-          className="text-teal-400 cursor-pointer hover:text-teal-500"
+          className="text-teal-400 cursor-pointer hover:text-teal-500 dark:text-teal-500 dark:hover:text-teal-400"
         >
           取消预约
         </div>

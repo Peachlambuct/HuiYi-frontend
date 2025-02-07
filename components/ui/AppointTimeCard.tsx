@@ -21,14 +21,26 @@ const AppointTimeCard: React.FC<AppointTimeCardProps> = ({
   const timeSlot = convertToTimeSlot(val);
   return (
     <div
-      className={`h-[40px] rounded-lg shadow flex items-center justify-between p-2 border ${
+      className={`h-[40px] rounded-lg shadow flex items-center justify-between p-2 border dark:border-zinc-700 ${
         status === "1"
-          ? "cursor-not-allowed"
-          : "hover:bg-gray-100 cursor-pointer"
-      } ${isSelected ? "bg-blue-100" : ""}`}
+          ? "cursor-not-allowed bg-zinc-100 dark:bg-zinc-800"
+          : "hover:bg-gray-100 dark:hover:bg-zinc-700 cursor-pointer bg-white dark:bg-zinc-800/90"
+      } ${
+        isSelected
+          ? "bg-teal-200 dark:bg-teal-800 border-teal-400 dark:border-teal-600"
+          : ""
+      }`}
       onClick={handleClick}
     >
-      <div className="text-sm font-mono">{timeSlot}</div>
+      <div
+        className={`text-sm font-mono ${
+          isSelected
+            ? "text-teal-900 dark:text-teal-100 font-medium"
+            : "text-zinc-800 dark:text-zinc-200"
+        }`}
+      >
+        {timeSlot}
+      </div>
       <div
         className={`h-2 w-2 rounded-full ${
           status === "1" ? "bg-red-500" : "bg-green-500"

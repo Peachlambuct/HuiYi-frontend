@@ -15,8 +15,8 @@ export default function RootLayout({
 }>) {
   const router = useRouter();
   return (
-    <div className="flex flex-col h-screen">
-      <div className="flex justify-between px-3 py-3">
+    <div className="flex flex-col min-h-screen h-screen overflow-hidden">
+      <div className="flex justify-between px-3 py-3 flex-shrink-0">
         <Link href="/home" className="flex items-center gap-2 cursor-pointer">
           <Image
             src="/images/icon.png"
@@ -45,7 +45,9 @@ export default function RootLayout({
           </PatientProvider>
         </div>
       </div>
-      <div className="flex-grow bg-blue-50/50 dark:bg-zinc-950">{children}</div>
+      <div className="flex-1 bg-blue-50/50 dark:bg-zinc-950 min-h-0 overflow-hidden">
+        {children}
+      </div>
     </div>
   );
 }
