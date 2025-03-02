@@ -56,6 +56,31 @@ const CaseList = () => {
     setCaseList(data);
   };
 
+  /**
+   * 将日期格式化为 "YYYY MM dd HH:mm:ss" 格式
+   * @param date 要格式化的日期对象，默认为当前时间
+   * @returns 格式化后的时间字符串
+   */
+  const formatDateTime = (date: Date = new Date()): string => {
+    // 获取年、月、日、时、分、秒
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; // getMonth() 返回 0-11
+    const day = date.getDate();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+
+    // 补零函数
+    const padZero = (num: number): string => {
+      return num < 10 ? `0${num}` : `${num}`;
+    };
+
+    // 格式化为 "YYYY MM dd HH:mm:ss"
+    return `${year}-${padZero(month)}-${padZero(day)} ${padZero(
+      hours
+    )}:${padZero(minutes)}:${padZero(seconds)}`;
+  };
+
   useEffect(() => {
     getLastestCase();
     queryCase();
@@ -125,7 +150,7 @@ const CaseList = () => {
             </div>
             {LatestCase && (
               <div className="text-right font-mono text-sm text-zinc-500 dark:text-zinc-400 mt-1">
-                更新于 {LatestCase?.UpdatedAt}
+                更新于 {formatDateTime(new Date(LatestCase.UpdatedAt))}
               </div>
             )}
           </div>
@@ -152,7 +177,7 @@ const CaseList = () => {
               key={c.ID}
               cid={c.ID}
               name={c.title}
-              date={c.CreatedAt}
+              date={formatDateTime(new Date(c.CreatedAt))}
               doctor_say={c.content}
             />
           ))

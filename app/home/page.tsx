@@ -21,6 +21,31 @@ const Home = () => {
     doctor_name: "",
     doctor_type: "",
   });
+
+  /**
+   * 将日期格式化为 "YYYY MM dd HH:mm:ss" 格式
+   * @param date 要格式化的日期对象，默认为当前时间
+   * @returns 格式化后的时间字符串
+   */
+  const formatDateTime = (date: Date = new Date()): string => {
+    // 获取年、月、日、时、分、秒
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; // getMonth() 返回 0-11
+    const day = date.getDate();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+
+    // 补零函数
+    const padZero = (num: number): string => {
+      return num < 10 ? `0${num}` : `${num}`;
+    };
+
+    // 格式化为 "YYYY MM dd HH:mm:ss"
+    return `${year}-${padZero(month)}-${padZero(day)} ${padZero(
+      hours
+    )}:${padZero(minutes)}:${padZero(seconds)}`;
+  };
   const [LatestCase, setLatestCase] = useState<Case>();
   const query: { from: Date | null; to: Date | null; title: string } = {
     from: null,
@@ -95,18 +120,20 @@ const Home = () => {
                     >
                       <div className="flex justify-between items-end">
                         <span className="text-xl font-semibold dark:text-zinc-100">
-                          {item.title}
+                          {item.title ? item.title : "暂无病例信息"}
                         </span>
                         <span className="text-zinc-400 text-sm dark:text-zinc-500">
-                          {item.UpdatedAt}
+                          {formatDateTime(new Date(item.UpdatedAt))}
                         </span>
                       </div>
                       <div className="mt-2">
                         <div className="text-lg dark:text-zinc-200">
-                          {item.title}
+                          {item.title ? item.title : "医生暂时未填写病例信息"}
                         </div>
                         <div className="text-zinc-400 dark:text-zinc-300 line-clamp-3">
-                          {item.content}
+                          {item.content
+                            ? item.content
+                            : "医生暂时未填写病例信息"}
                         </div>
                       </div>
                     </div>
@@ -266,13 +293,15 @@ const Home = () => {
                     最新报告
                   </span>
                   <span className="text-zinc-400 text-sm">
-                    {LatestCase.UpdatedAt}
+                    {formatDateTime(new Date(LatestCase.UpdatedAt))}
                   </span>
                 </div>
                 <div className="mt-2">
                   <div className="text-lg">{LatestCase.title}</div>
                   <div className="text-zinc-400 dark:text-zinc-300 line-clamp-1">
-                    {LatestCase.content}
+                    {LatestCase.content
+                      ? LatestCase.content
+                      : "医生暂时未填写病例信息"}
                   </div>
                 </div>
               </div>

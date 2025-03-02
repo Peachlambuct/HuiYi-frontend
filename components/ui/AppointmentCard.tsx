@@ -32,7 +32,7 @@ const AppointmentCard = ({
               src={
                 doctorImg
                   ? `http://localhost:8080/api/file?img=${doctorImg}`
-                  : `/images/avatar.png`
+                  : `/images/dr-remirez.png`
               }
               width={100}
               height={100}

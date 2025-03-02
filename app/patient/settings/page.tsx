@@ -22,6 +22,11 @@ export interface PatientInfo {
   age: number;
 }
 
+// 将性别字符串转换为布尔值
+const convertSexToBoolean = (sex: string): boolean => {
+  return sex === "男" ? true : false;
+};
+
 const Settings = () => {
   const [data, setData] = useState<PatientInfo | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -31,6 +36,9 @@ const Settings = () => {
   const fetchData = async () => {
     try {
       const result = await get("/api/patient/info");
+      // 在获取数据后可以使用 convertSexToBoolean 函数
+      const sexBoolean = convertSexToBoolean(result.sex);
+      result.sex = sexBoolean;
       setData(result);
     } catch (error) {
       console.error("Error:", error);

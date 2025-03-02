@@ -7,6 +7,7 @@ import DoctorCombobox from "@/components/ui/DoctorTypeCombobox";
 import { Input } from "@/components/ui/input";
 import { get, post } from "@/net";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 export interface Appointment {
   id: string;
@@ -32,6 +33,8 @@ const AppointmentPage = () => {
     doctor_name: "",
     doctor_type: "",
   });
+  const [selectedDoctorId, setSelectedDoctorId] = useState<string | null>(null);
+  const searchParams = useSearchParams();
 
   const getDoctor = async () => {
     try {
@@ -73,7 +76,14 @@ const AppointmentPage = () => {
   useEffect(() => {
     getDoctor();
     getAppointment();
-  }, []);
+
+    // 检查URL参数是否包含doctorId
+    const doctorId = searchParams.get("doctorId");
+    if (doctorId) {
+      setSelectedDoctorId(doctorId);
+      // 可以滚动到该医生的卡片位置或高亮显示
+    }
+  }, [searchParams]);
 
   return (
     <div className="h-full flex items-center">
@@ -114,6 +124,7 @@ const AppointmentPage = () => {
                 name={doctor.name}
                 type={doctor.job_type}
                 title={doctor.job_title}
+                isSelected={doctor.id === selectedDoctorId}
               />
             ))}
           </div>
@@ -133,7 +144,7 @@ const AppointmentPage = () => {
                   key={appointment.id}
                   id={appointment.id}
                   doctorName={appointment.doctor_name}
-                  doctorImg={appointment.doctor_avatar}
+                  doctorImg={null}
                   date={appointment.date}
                   status={appointment.status}
                   type={appointment.doctor_type}

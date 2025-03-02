@@ -154,7 +154,7 @@ const AppointmentListPage = () => {
                   key={appointment.id}
                   id={appointment.id}
                   doctorName={appointment.doctor_name}
-                  doctorImg={appointment.doctor_avatar}
+                  doctorImg={null}
                   date={appointment.date}
                   status={appointment.status}
                   type={appointment.doctor_type}

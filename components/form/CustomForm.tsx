@@ -3,7 +3,6 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -17,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -42,6 +42,7 @@ export function CustomForm() {
   }
 
   const Router = useRouter();
+  const { toast } = useToast();
   const onSubmit = async (data: FormValues) => {
     try {
       const response = await fetch("http://localhost:8080/api/user/reg", {
@@ -53,14 +54,28 @@ export function CustomForm() {
       });
 
       if (!response.ok) {
+        toast({
+          title: "登录失败",
+          description: "请检查您的用户名和密码",
+          variant: "destructive",
+        });
         throw new Error("Network response was not ok");
       }
 
       const result = await response.json();
       const userid = result.data.id;
       const jwt = result.data.jwt || result.data.token;
+      const role = result.data.role;
 
       localStorage.setItem("jwt", jwt);
+      localStorage.setItem("role", role);
+
+      toast({
+        title: "登录成功",
+        description: `欢迎回来，${role === "patient" ? "患者" : "医生"}`,
+        variant: "default",
+      });
+
       if (result.data.status && result.data.role === "patient") {
         Router.push("/home");
       } else if (result.data.status && result.data.role === "doctor") {
@@ -71,6 +86,11 @@ export function CustomForm() {
       console.log("Success:", result);
     } catch (error) {
       console.error("Error:", error);
+      toast({
+        title: "操作失败",
+        description: "发生了未知错误，请稍后再试",
+        variant: "destructive",
+      });
     }
   };
   // ...
